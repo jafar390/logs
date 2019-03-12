@@ -32,12 +32,12 @@ if [ "$y" -gt "$x" ]; then
                  echo  "***********************************************************************"
              else
              echo $array1
-                kubectl get pods -n $array1 | grep Error | awk 'NR>1 {print $1}' | xargs kubectl delete pod
+                kubectl get pods -n $array1 | grep Error | awk 'NR>1 {print $1}' | xargs kubectl delete pod -n $array1
             fi
         done
     done
 fi
-kubectl get po -n dkube -l 'app in (dkube-ext,dkube-d3api)' | grep -v Running | awk 'NR>1 {print $1}' | xargs kubectl delete pod
+kubectl get po -n dkube -l 'app in (dkube-ext,dkube-d3api)' | grep -v Running | awk 'NR>1 {print $1}' | xargs kubectl delete pod -n dkube
 
 echo "All pods are in Running state"
 
