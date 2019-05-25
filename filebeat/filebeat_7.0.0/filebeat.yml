@@ -26,8 +26,10 @@ filebeat.autodiscover:
                   ids:
                    - "${data.kubernetes.container.id}"
               fields:
-                Jobid: ${data.kubernetes.labels.job_name}
-                Role: ${data.kubernetes.labels.replica-type}
+                      tf_jobid: ${data.kubernetes.labels.tf_job_name : not_tf}
+                      tf_role: ${data.kubernetes.labels.tf-replica-type : not_tf}
+                      pt_jobid: ${data.kubernetes.labels.pt_job_name: not_pt }
+                      pt_role: ${data.kubernetes.labels.pt-replica-type : not_pt}
               fields_under_root: true
 processors:
    - drop_fields:
