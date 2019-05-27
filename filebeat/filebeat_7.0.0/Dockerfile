@@ -3,4 +3,5 @@ COPY filebeat.yml /usr/share/filebeat
 USER root
 WORKDIR  /usr/share/filebeat
 RUN chmod go-w /usr/share/filebeat/filebeat.yml
+LABEL heritage="dkube"
 CMD ["./filebeat","-e"]

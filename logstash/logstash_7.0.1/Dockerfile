@@ -3,5 +3,6 @@ COPY logstash.yml /usr/share/logstash/config
 COPY pipelines.yml /usr/share/logstash/config
 COPY logstash-sample.conf /usr/share/logstash/config
 USER root
+LABEL heritage="dkube"
 CMD ["logstash -f /config-dir/logstash.conf"]
 
