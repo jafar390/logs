@@ -16,17 +16,17 @@ data:
     filter {
        mutate {
          add_field => {
-            "[@metadata][jobuuid]"=> "%{[tfjobid]}"
             "[@metadata][role]"=> "%{[tfrole]}"
             "[@metadata][index]" => "%{[tfindex]}"
             "[@metadata][username]" => "%{[username]}"
+             "[@metadata][jobname]" => "%{[jobname]}"
           }
        }
     }
 
     output {
         file{
-           path => "/var/log/dkube/%{[@metadata][username]}/%{[@metadata][jobuuid]}/logs.txt"
+           path => "/var/log/dkube/%{[@metadata][username]}/%{[@metadata][jobname]}/logs.txt"
            codec => line{format => "%{@timestamp}  %{[@metadata][role]}-%{[@metadata][index]}  %{message}"}
          }
     }

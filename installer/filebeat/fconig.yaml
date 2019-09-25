@@ -19,9 +19,14 @@ data:
                           kubernetes.container.name: tensorflow
                      - equals:
                           kubernetes.container.name: datajob
-                 - and:
                      - equals:
-                         kubernetes.labels.logger: filebeat
+                          kubernetes.container.name: main
+                 - and:
+                     - or:
+                          - equals:
+                                  kubernetes.labels.platform: Dkube
+                          - equals:
+                                kubernetes.labels.logger: filebeat
                      - equals:
                          kubernetes.node.name: ${NODENAME}
               config:
@@ -33,8 +38,11 @@ data:
                   fields:
                      tfjobid: ${data.kubernetes.labels.jobuuid}
                      tfrole: ${data.kubernetes.labels.tf-replica-type:SINGLETON}
-                     username: ${data.kubernetes.labels.username}
+                     username: ${data.kubernetes.labels.username:kubeflow}
                      tfindex: ${data.kubernetes.labels.tf-replica-index:0}
+                     jobname: ${data.kubernetes.labels.jobname}
+                     wfname: ${data.kubernetes.labels.workflows.argoproj.io/workflow}
+                     podname: ${data.kubernetes.name}
                   fields_under_root: true
 
     processors:
